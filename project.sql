@@ -1,6 +1,4 @@
-﻿create database eddie_project
-use eddie_project
-go
+
 ---inspect data
    select * from dbo.sales_Data_sample$
 --- checking unique values
