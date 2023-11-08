@@ -1,5 +1,4 @@
-﻿use eddie_project
-go
+
 inspecting data 
 select * from dbo.spotify_top_songs 
 ---List the most popular songs on Spotify globally in October 2023, 
