@@ -65,9 +65,38 @@ select * from dbo.book_ratings
    from book_Ratings
    group by Author
    order by Author;
+
 ---tìm ra tác giả có xếp hạng trung bình của tất cả sách của họ lớn nhất
    select  Top 1 author, max(avg_Rating) as highest_avg_Rating
    from dbo.book_Ratings
    group by Author
    order by highest_avg_Rating desc;
-  
+
+---Tìm những quyển sách có mô tả ngắn nhất, dài nhất
+   select book,LEN(description) as description_length
+   from dbo.book_Ratings
+   order by description_length desc;
+
+---Tìm quyển sách nào có nhiều thể loại nhất và ít nhất
+   select book,COUNT(genres) as genre_count
+   from dbo.book_Ratings
+   group by Book
+   order by genre_count desc;
+
+---Tìm những quyển sách có khả năng được đánh giá cao nhất,thấp nhất dựa trên mô tả của chúng
+   select book,description,
+   score_description(description) as description_score
+   from book_Ratings
+   order by description_score desc;
+
+---Tìm những quyển sách có thể thuộc nhiều thể loại khác nhau dựa trên mô tả chúng
+   select book,description,classify_description(description) as genres
+   from book_Ratings
+   where genres <> genres 
+   order by len(genres) desc;
+
+---Tìm quyển sách được dự đoán là sẽ có nhiều đánh giá hơn trong tương lai dựa trên các yếu tố như tác giả,thể loại, điểm tb
+   select book,author,genres,avg_rating,num_ratings,
+   predict_num_ratings(author,genres,avg_rating) as future_num_ratings
+   from book_Ratings
+   order by future_num_ratings desc;
